@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beldex — The Future of Privacy</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --bg: #060c14;
+  --bg2: #0a1520;
+  --bg3: #0d1e2e;
+  --card: #0f2035;
+  --card2: #122438;
+  --border: rgba(0,255,160,0.12);
+  --green: #00ff9f;
+  --green2: #00cc7a;
+  --green3: #00ff6a;
+  --blue: #00b4ff;
+  --text: #e8f4f8;
+  --muted: #7a9bb5;
+  --accent: #1affb2;
+  --glow: 0 0 30px rgba(0,255,160,0.25);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+
+/* ── PARTICLE BG ── */
+#particles{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.particle{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,255,160,0.6),transparent);
+  animation:float linear infinite;
+  opacity:0;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:0.4}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;width:100%;z-index:999;
+  background:rgba(6,12,20,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+  transition:all 0.3s;
+}
+.nav.scrolled{
+  background:rgba(6,12,20,0.98);
+  box-shadow:0 4px 30px rgba(0,0,0,0.5);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:42px;border-radius:8px}
+.nav-logo span{
+  font-family:'Rajdhani',sans-serif;
+  font-size:22px;font-weight:700;
+  color:var(--green);
+  letter-spacing:1px;
+}
+.nav-menu{display:flex;gap:4px}
+.nav-menu a{
+  color:var(--muted);text-decoration:none;
+  padding:8px 18px;border-radius:8px;
+  font-size:14px;font-weight:500;
+  transition:all 0.25s;letter-spacing:0.8px;
+  border:1px solid transparent;
+  position:relative;
+  text-transform:uppercase;font-size:12px;
+}
+.nav-menu a::after{
+  content:'';position:absolute;
+  bottom:4px;left:50%;right:50%;
+  height:2px;background:var(--green);
+  border-radius:2px;transition:all 0.3s ease;
+  opacity:0;
+}
+.nav-menu a:hover,.nav-menu a.active{
+  color:var(--green);
+  background:rgba(0,255,160,0.06);
+}
+.nav-menu a:hover::after,.nav-menu a.active::after{
+  left:18px;right:18px;opacity:1;
+}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--green);border-radius:2px;transition:0.3s}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:70px;position:relative;z-index:1}
+.page.active{display:block}
+
+/* ── HOME PAGE ── */
+.hero{
+  min-height:calc(100vh - 70px);
+  display:flex;align-items:center;
+  padding:60px 60px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(0,255,160,0.07),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-left{flex:1;max-width:600px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,255,160,0.08);
+  border:1px solid rgba(0,255,160,0.2);
+  padding:6px 16px;border-radius:30px;
+  font-size:12px;color:var(--green);letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:28px;
+}
+.hero-tag .dot{
+  width:6px;height:6px;
+  background:var(--green);border-radius:50%;
+  animation:blink 1.5s infinite;
+}
+.hero h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(42px,6vw,78px);
+  font-weight:700;line-height:1.05;
+  margin-bottom:20px;
+}
+.hero h1 .line1{color:var(--text)}
+.hero h1 .line2{
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{
+  font-size:17px;color:var(--muted);
+  line-height:1.8;margin-bottom:40px;
+  max-width:480px;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{
+  padding:14px 32px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#060c14;font-weight:700;font-size:15px;
+  border-radius:10px;text-decoration:none;
+  transition:all 0.3s;border:none;cursor:pointer;
+  box-shadow:0 8px 25px rgba(0,255,160,0.3);
+  letter-spacing:0.5px;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 35px rgba(0,255,160,0.4)}
+.btn-secondary{
+  padding:14px 32px;
+  background:transparent;
+  border:1px solid rgba(0,255,160,0.35);
+  color:var(--green);font-weight:600;font-size:15px;
+  border-radius:10px;text-decoration:none;
+  transition:all 0.3s;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(0,255,160,0.08);transform:translateY(-2px)}
+
+.hero-right{
+  flex:1;display:flex;justify-content:center;align-items:center;
+  position:relative;
+}
+.hero-right-wrap{
+  display:flex;align-items:center;gap:24px;
+  justify-content:center;
+}
+.hero-logo-box{
+  position:relative;width:170px;height:170px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.hero-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(0,255,160,0.18);
+  animation:spin linear infinite;
+}
+.hero-ring:nth-child(1){width:100%;height:100%;animation-duration:20s}
+.hero-ring:nth-child(2){width:72%;height:72%;animation-duration:14s;animation-direction:reverse}
+.hero-ring:nth-child(3){width:46%;height:46%;animation-duration:9s;border-color:rgba(0,180,255,0.25)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-logo{
+  width:80px;height:80px;object-fit:contain;
+  border-radius:18px;position:relative;z-index:2;
+  box-shadow:0 0 40px rgba(0,255,160,0.3);
+  animation:logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse{
+  0%,100%{box-shadow:0 0 40px rgba(0,255,160,0.25);}
+  50%{box-shadow:0 0 70px rgba(0,255,160,0.5);}
+}
+.hero-main-img{
+  width:100%;max-width:600px;
+  border-radius:20px;
+  box-shadow:0 0 60px rgba(0,255,160,0.15),0 30px 80px rgba(0,0,0,0.6);
+  border:1px solid rgba(0,255,160,0.12);
+  animation:heroFloat 4s ease-in-out infinite;
+  display:block;
+}
+@keyframes heroFloat{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-12px);}
+}
+
+/* STATS */
+.stats-row{
+  display:flex;gap:2px;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stat{
+  flex:1;padding:30px 20px;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-family:'Rajdhani',sans-serif;
+  font-size:36px;font-weight:700;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:0.5px}
+
+/* WHAT IS BELDEX */
+.section-wrap{padding:90px 60px}
+.section-head{text-align:center;margin-bottom:60px}
+.section-tag{
+  display:inline-block;
+  background:rgba(0,255,160,0.08);
+  border:1px solid rgba(0,255,160,0.2);
+  color:var(--green);font-size:11px;
+  letter-spacing:3px;text-transform:uppercase;
+  padding:5px 16px;border-radius:30px;margin-bottom:16px;
+}
+.section-head h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(32px,4vw,52px);font-weight:700;
+  color:var(--text);margin-bottom:12px;
+}
+.section-head p{color:var(--muted);font-size:17px;max-width:560px;margin:0 auto}
+
+.info-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+.info-text h3{
+  font-family:'Rajdhani',sans-serif;
+  font-size:36px;font-weight:700;color:var(--text);
+  margin-bottom:16px;
+}
+.info-text p{color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:24px}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.check-list li{
+  display:flex;align-items:center;gap:12px;
+  font-size:15px;color:var(--text);
+}
+.check-list li::before{
+  content:'✓';
+  width:22px;height:22px;
+  background:rgba(0,255,160,0.15);
+  border:1px solid var(--green);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);font-size:12px;font-weight:700;
+  flex-shrink:0;
+}
+
+.privacy-img{
+  width:100%;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border:1px solid var(--border);
+}
+
+/* HOW IT WORKS */
+.dark-section{background:var(--bg2);padding:90px 60px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px}
+.step{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;padding:40px 30px;
+  text-align:center;position:relative;
+  transition:all 0.3s;overflow:hidden;
+}
+.step::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  opacity:0;transition:0.3s;
+}
+.step:hover{transform:translateY(-8px);border-color:rgba(0,255,160,0.3)}
+.step:hover::before{opacity:1}
+.step-num{
+  font-family:'Orbitron',monospace;
+  font-size:48px;font-weight:900;
+  background:linear-gradient(135deg,rgba(0,255,160,0.2),rgba(0,180,255,0.2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+.step-icon{font-size:36px;margin-bottom:16px}
+.step h3{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:12px}
+.step p{color:var(--muted);font-size:15px;line-height:1.7}
+
+/* PRIVACY STACK */
+.stack-section{padding:90px 60px}
+.stack-grid{
+  display:flex;flex-direction:column;gap:2px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;max-width:800px;margin:50px auto 0;
+}
+.stack-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 35px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  transition:all 0.3s;
+}
+.stack-row:last-child{border-bottom:none}
+.stack-row:hover{background:rgba(0,255,160,0.04)}
+.stack-left{display:flex;align-items:center;gap:16px;font-size:16px;color:var(--muted)}
+.stack-left svg{opacity:0.8}
+.stack-right{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;font-weight:700;color:var(--green);letter-spacing:1px;
+}
+
+/* BLOCKCHAIN */
+.blockchain-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+  padding:90px 60px;background:var(--bg2);
+}
+.bc-cards{display:flex;flex-direction:column;gap:20px}
+.bc-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  transition:all 0.3s;
+}
+.bc-card:hover{border-color:rgba(0,255,160,0.3);transform:translateX(8px)}
+.bc-card h3{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;font-weight:700;color:var(--text);
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:10px;
+}
+.bc-card p{color:var(--muted);font-size:15px;line-height:1.7}
+.bc-img{
+  width:100%;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  border:1px solid var(--border);
+}
+
+/* NEXUS */
+.nexus-section{
+  padding:90px 60px;
+  background:linear-gradient(135deg,rgba(0,255,160,0.03),rgba(0,180,255,0.03));
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.nexus-wrap{display:flex;gap:60px;align-items:center}
+.nexus-text{flex:1}
+.nexus-text h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(36px,5vw,64px);font-weight:700;
+  color:var(--text);margin-bottom:8px;
+}
+.nexus-text .brand{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(28px,4vw,48px);
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;margin-bottom:24px;
+}
+.nexus-text p{color:var(--muted);font-size:17px;line-height:1.8;max-width:480px}
+.nexus-img{
+  flex:1;max-width:400px;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  border:1px solid var(--border);
+}
+
+/* ── SERVICES ── */
+.page-header{
+  background:var(--bg2);
+  padding:70px 60px 50px;
+  border-bottom:1px solid var(--border);
+}
+.page-header h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(36px,5vw,60px);font-weight:700;color:var(--text);
+  margin-bottom:12px;
+}
+.page-header p{color:var(--muted);font-size:17px}
+.service-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;padding:60px;
+}
+.srv-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px 30px;
+  text-align:center;cursor:pointer;
+  transition:all 0.35s;text-decoration:none;
+  display:block;position:relative;overflow:hidden;
+}
+.srv-card::after{
+  content:'';position:absolute;
+  inset:0;opacity:0;transition:0.3s;
+  background:linear-gradient(135deg,rgba(0,255,160,0.06),rgba(0,180,255,0.04));
+}
+.srv-card:hover{transform:translateY(-10px);border-color:rgba(0,255,160,0.35)}
+.srv-card:hover::after{opacity:1}
+.srv-icon{
+  width:70px;height:70px;
+  background:rgba(0,255,160,0.1);
+  border:1px solid rgba(0,255,160,0.2);
+  border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;font-size:28px;
+  transition:0.3s;
+}
+.srv-card:hover .srv-icon{background:rgba(0,255,160,0.18);transform:scale(1.1)}
+.srv-card h3{
+  font-family:'Rajdhani',sans-serif;
+  font-size:22px;font-weight:700;color:var(--text);margin-bottom:10px;
+}
+.srv-card p{color:var(--muted);font-size:14px;line-height:1.7}
+
+/* ── ABOUT ── */
+.about-hero{
+  padding:80px 60px;background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  text-align:center;
+}
+.about-hero h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(40px,5vw,64px);font-weight:700;color:var(--text);
+  margin-bottom:20px;
+}
+.about-hero p{
+  color:var(--muted);font-size:18px;line-height:1.8;
+  max-width:700px;margin:0 auto;
+}
+.about-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:25px;padding:60px;
+}
+.about-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px 30px;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.about-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+}
+.about-card:hover{transform:translateY(-8px);border-color:rgba(0,255,160,0.3)}
+.about-card h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px;
+}
+.about-card p{color:var(--muted);font-size:15px;line-height:1.8}
+
+/* ── ROADMAP ── */
+.roadmap-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;padding:60px;
+}
+.rm-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:35px;
+  transition:all 0.3s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.rm-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  opacity:0;transition:0.3s;
+}
+.rm-card:hover{transform:translateY(-8px);border-color:rgba(0,255,160,0.3)}
+.rm-card:hover::before{opacity:1}
+.rm-quarter{
+  display:inline-block;
+  background:rgba(0,255,160,0.1);
+  border:1px solid rgba(0,255,160,0.2);
+  color:var(--green);font-size:12px;font-weight:600;
+  letter-spacing:1px;padding:4px 14px;border-radius:20px;
+  margin-bottom:16px;
+}
+.rm-card h3{
+  font-family:'Rajdhani',sans-serif;
+  font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px;
+}
+.rm-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rm-card ul li{
+  color:var(--muted);font-size:14px;
+  padding-left:20px;position:relative;
+}
+.rm-card ul li::before{
+  content:'›';position:absolute;left:0;
+  color:var(--green);font-size:18px;line-height:1;
+}
+.rm-future{
+  border-color:rgba(0,180,255,0.2);
+  background:linear-gradient(135deg,var(--card),rgba(0,180,255,0.05));
+}
+
+/* ── COIN PRICE ── */
+.price-wrap{padding:60px}
+.live-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(0,255,160,0.08);
+  border:1px solid rgba(0,255,160,0.2);
+  padding:8px 20px;border-radius:30px;
+  font-size:13px;color:var(--green);font-weight:600;
+  margin-bottom:40px;
+}
+.live-dot{
+  width:8px;height:8px;background:var(--green);
+  border-radius:50%;animation:blink 1.2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.price-cards{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:20px;margin-bottom:40px;
+}
+.pc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;text-align:center;
+  transition:all 0.3s;
+}
+.pc:hover{transform:translateY(-6px);border-color:rgba(0,255,160,0.3)}
+.pc span{font-size:13px;color:var(--muted);letter-spacing:0.5px}
+.pc h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:32px;font-weight:700;color:var(--text);margin-top:8px;
+}
+.pc.green h2{color:var(--green)}
+.pc.red h2{color:#ff4d6d}
+.chart-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:30px;margin-bottom:30px;
+}
+.chart-card h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:24px;font-weight:700;color:var(--text);margin-bottom:20px;
+}
+.tradingview-widget-container{width:100%;height:380px}
+.insight-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:35px;
+}
+.insight-card h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:24px;color:var(--text);margin-bottom:20px;
+}
+.insight-card ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+.insight-card li{
+  display:flex;align-items:center;gap:12px;
+  color:var(--muted);font-size:15px;
+}
+.insight-card li::before{
+  content:'✔';color:var(--green);font-weight:700;flex-shrink:0;
+}
+
+/* ── EXCHANGE PARTNERS ── */
+.ex-grid{
+  display:flex;flex-direction:column;gap:25px;
+  padding:60px;
+}
+.ex-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px;
+  display:flex;align-items:center;gap:40px;
+  transition:all 0.3s;
+}
+.ex-card:hover{border-color:rgba(0,255,160,0.3);transform:translateX(6px)}
+.ex-logo{width:200px;flex-shrink:0;object-fit:contain;border-radius:12px}
+.ex-info h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:28px;font-weight:700;color:var(--text);margin-bottom:12px;
+}
+.ex-info p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:20px}
+.trust-box{
+  margin:0 60px 60px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:50px;text-align:center;
+}
+.trust-box h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:30px;font-weight:700;color:var(--text);margin-bottom:16px;
+}
+.trust-box p{color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto}
+.trust-points{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:15px;
+}
+.tp{
+  background:rgba(0,255,160,0.06);
+  border:1px solid rgba(0,255,160,0.15);
+  border-radius:12px;padding:16px;
+  color:var(--green);font-size:14px;font-weight:600;
+}
+
+/* ── PLANS ── */
+.plans-wrap{padding:60px}
+.plans-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(36px,5vw,56px);font-weight:700;
+  color:var(--text);margin-bottom:8px;
+}
+.plans-sub{color:var(--muted);font-size:17px;margin-bottom:50px}
+.plan-block{margin-bottom:50px}
+.plan-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:24px;font-weight:700;color:var(--green);
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.plan-table-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead{background:var(--card2)}
+th{
+  padding:16px 20px;text-align:left;
+  color:var(--green);font-weight:600;
+  font-size:13px;letter-spacing:0.5px;
+  border-bottom:1px solid var(--border);
+}
+td{
+  padding:14px 20px;color:var(--muted);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  vertical-align:middle;
+}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(0,255,160,0.03)}
+.td-total{color:var(--green);font-weight:700;font-family:'Rajdhani',sans-serif;font-size:16px}
+.elite-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(255,180,0,0.15),rgba(255,100,0,0.1));
+  border:1px solid rgba(255,160,0,0.3);
+  color:#ffa500;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;
+}
+
+/* ── CONTACT ── */
+.contact-wrap{
+  display:flex;gap:60px;padding:60px;align-items:flex-start;
+}
+.contact-left{flex:1;max-width:500px}
+.contact-left h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:36px;font-weight:700;color:var(--text);margin-bottom:16px;
+}
+.contact-left p{color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:30px}
+.contact-form{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px;flex:1;
+}
+.contact-form h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px;
+}
+.contact-form .sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-group input,.form-group textarea{
+  width:100%;padding:14px 18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;color:var(--text);
+  font-size:15px;font-family:'Inter',sans-serif;
+  outline:none;transition:border 0.3s;
+}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(0,255,160,0.4)}
+.form-group textarea{height:120px;resize:none}
+.contact-info-cards{display:flex;flex-direction:column;gap:16px;margin-top:30px}
+.ci-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.ci-icon{
+  width:44px;height:44px;background:rgba(0,255,160,0.1);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  color:var(--green);font-size:18px;flex-shrink:0;
+}
+.ci-text span{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.ci-text strong{color:var(--text);font-size:15px}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:60px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:50px;margin-bottom:40px;
+}
+.footer-brand .logo-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-brand img{height:38px;border-radius:6px}
+.footer-brand .name{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;font-weight:700;color:var(--green);
+}
+.footer-brand p{color:var(--muted);font-size:14px;line-height:1.8;max-width:300px}
+.footer-col h4{
+  font-family:'Rajdhani',sans-serif;
+  font-size:16px;font-weight:700;color:var(--text);
+  margin-bottom:16px;letter-spacing:1px;
+}
+.footer-col a{
+  display:block;color:var(--muted);text-decoration:none;
+  font-size:14px;margin-bottom:10px;transition:color 0.25s;
+}
+.footer-col a:hover{color:var(--green)}
+.footer-col p{color:var(--muted);font-size:14px;line-height:1.8}
+.footer-bottom{
+  border-top:1px solid var(--border);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-bottom p{color:var(--muted);font-size:13px}
+.social-links{display:flex;gap:12px}
+.social-links a{
+  width:36px;height:36px;
+  background:rgba(0,255,160,0.08);
+  border:1px solid rgba(0,255,160,0.15);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);text-decoration:none;font-size:16px;
+  transition:all 0.25s;
+}
+.social-links a:hover{color:var(--green);border-color:var(--green);background:rgba(0,255,160,0.12)}
+
+/* ── DETAIL PAGES ── */
+.detail-page{padding:60px}
+.detail-page h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--text);
+  margin-bottom:12px;
+}
+.detail-page .sub{color:var(--muted);font-size:17px;margin-bottom:50px;max-width:600px}
+.detail-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:45px;max-width:900px;
+}
+.detail-card h2{
+  font-family:'Rajdhani',sans-serif;
+  font-size:24px;font-weight:700;color:var(--text);
+  margin-bottom:20px;margin-top:35px;
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.detail-card h2:first-child{margin-top:0}
+.detail-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:10px}
+.detail-card li{
+  color:var(--muted);font-size:15px;padding-left:24px;position:relative;line-height:1.7;
+}
+.detail-card li::before{
+  content:'✔';position:absolute;left:0;
+  color:var(--green);font-weight:700;
+}
+
+/* ── UTILITY ── */
+.service-icon{color:var(--green);font-size:28px}
+.card-link{text-decoration:none}
+.animate{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
+.animate.in{opacity:1;transform:translateY(0)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .hero{flex-direction:column;padding:40px 24px;text-align:center}
+  .hero-right{display:none}
+  .hero-btns{justify-content:center}
+  .info-grid,.blockchain-wrap{grid-template-columns:1fr}
+  .nexus-wrap{flex-direction:column;text-align:center}
+  .about-cards,.steps{grid-template-columns:1fr}
+  .price-cards{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .contact-wrap{flex-direction:column}
+  .ex-card{flex-direction:column;text-align:center}
+  .trust-points{grid-template-columns:repeat(2,1fr)}
+  .nav-menu{display:none}
+  .nav-menu.open{display:flex;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:var(--bg);padding:20px;border-bottom:1px solid var(--border);gap:10px}
+  .hamburger{display:flex}
+  .section-wrap,.dark-section,.stack-section,.blockchain-wrap,.nexus-section{padding:60px 24px}
+  .roadmap-grid,.plans-wrap,.ex-grid,.service-grid,.about-cards,.contact-wrap,.trust-box,.detail-page{padding:30px 24px}
+  .trust-box{margin:0 24px 40px}
+  .stats-row{flex-wrap:wrap}
+  .stat{min-width:50%;border-right:none;border-bottom:1px solid var(--border)}
+}
+@media(max-width:600px){
+  .price-cards{grid-template-columns:1fr}
+  .trust-points{grid-template-columns:1fr 1fr}
+  .info-img,.nexus-img,.bc-img{border-radius:12px}
+}
+/* ── SPLASH SCREEN ── */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.6s ease, visibility 0.6s ease;
+}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splash-inner{text-align:center}
+.splash-logo{
+  width:100px;height:100px;border-radius:20px;
+  animation:splashPulse 1s ease-in-out infinite alternate;
+  margin-bottom:20px;
+}
+@keyframes splashPulse{
+  from{box-shadow:0 0 30px rgba(0,255,160,0.3);}
+  to{box-shadow:0 0 80px rgba(0,255,160,0.7);}
+}
+.splash-name{
+  font-family:'Orbitron',monospace;font-size:36px;font-weight:900;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:8px;margin-bottom:30px;
+}
+.splash-bar{
+  width:200px;height:3px;background:rgba(255,255,255,0.1);
+  border-radius:3px;margin:0 auto 14px;overflow:hidden;
+}
+.splash-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  border-radius:3px;animation:splashLoad 1.8s ease forwards;
+}
+@keyframes splashLoad{to{width:100%}}
+.splash-text{color:var(--muted);font-size:13px;letter-spacing:2px;text-transform:uppercase}
+
+/* ── CUSTOM CURSOR ── */
+#cursor{
+  width:12px;height:12px;
+  background:var(--green);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s ease;
+  box-shadow:0 0 10px var(--green);
+}
+#cursor-trail{
+  width:32px;height:32px;
+  border:1px solid rgba(0,255,160,0.4);
+  border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9997;
+  transform:translate(-50%,-50%);
+  transition:left 0.12s ease,top 0.12s ease;
+}
+body:hover #cursor{opacity:1}
+
+/* ── NAV PRICE TICKER ── */
+.nav-ticker{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(0,255,160,0.06);
+  border:1px solid rgba(0,255,160,0.15);
+  border-radius:20px;padding:5px 14px;
+  font-size:13px;font-weight:600;
+  cursor:pointer;transition:all 0.3s;
+}
+.nav-ticker:hover{background:rgba(0,255,160,0.12)}
+.nav-ticker .t-dot{
+  width:6px;height:6px;background:var(--green);
+  border-radius:50%;animation:blink 1.2s infinite;flex-shrink:0;
+}
+.nav-ticker .t-label{color:var(--muted);font-size:11px}
+.nav-ticker .t-price{color:var(--green)}
+.nav-ticker .t-change{font-size:11px}
+.nav-ticker .t-change.up{color:#00ff9f}
+.nav-ticker .t-change.dn{color:#ff4d6d}
+
+/* ── PAGE TRANSITION ── */
+.page{
+  animation:none;
+}
+.page.active{
+  animation:pageIn 0.4s ease forwards;
+}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── TYPEWRITER ── */
+.typewriter{
+  border-right:3px solid var(--green);
+  white-space:nowrap;overflow:hidden;
+  display:inline-block;
+}
+
+/* ── ANIMATED COUNTER ── */
+.stat-num[data-target]{
+  transition:all 0.3s;
+}
+
+/* ── 3D TILT CARDS ── */
+.tilt{transform-style:preserve-3d;transition:transform 0.1s ease}
+
+/* ── SCROLL REVEAL ── */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:all 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.left{transform:translateX(-40px)}
+.reveal.right{transform:translateX(40px)}
+.reveal.scale{transform:scale(0.92)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── FLOATING BUTTONS ── */
+.float-btns{
+  position:fixed;bottom:90px;right:24px;
+  display:flex;flex-direction:column;gap:12px;z-index:500;
+}
+.float-btn{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;text-decoration:none;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+  transition:all 0.3s;
+  animation:floatBounce 3s ease-in-out infinite;
+}
+.float-btn.whatsapp{
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  color:white;
+}
+.float-btn.telegram{
+  background:linear-gradient(135deg,#2aabee,#229ed9);
+  color:white;
+  animation-delay:0.5s;
+}
+.float-btn:hover{transform:scale(1.15) translateY(-3px)!important}
+@keyframes floatBounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+/* ── BACK TO TOP ── */
+#backTop{
+  position:fixed;bottom:24px;right:24px;z-index:500;
+  width:46px;height:46px;border-radius:12px;
+  background:rgba(0,255,160,0.12);
+  border:1px solid rgba(0,255,160,0.3);
+  color:var(--green);font-size:16px;
+  cursor:pointer;transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+}
+#backTop.show{opacity:1;pointer-events:all}
+#backTop:hover{background:rgba(0,255,160,0.22);transform:translateY(-3px)}
+
+/* ── GLASSMORPHISM UPGRADE ── */
+.step,.about-card,.rm-card,.srv-card,.bc-card{
+  backdrop-filter:blur(10px);
+  background:rgba(15,32,53,0.7)!important;
+}
+
+/* ── FAQ SECTION ── */
+.faq-section{padding:90px 60px;background:var(--bg2)}
+.faq-grid{max-width:850px;margin:50px auto 0;display:flex;flex-direction:column;gap:12px}
+.faq-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;transition:border 0.3s;
+}
+.faq-item.open{border-color:rgba(0,255,160,0.3)}
+.faq-q{
+  padding:22px 28px;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;
+  color:var(--text);transition:color 0.3s;user-select:none;
+}
+.faq-item.open .faq-q{color:var(--green)}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(0,255,160,0.1);
+  border:1px solid rgba(0,255,160,0.2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);font-size:14px;transition:transform 0.3s;flex-shrink:0;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease,padding 0.3s;
+  padding:0 28px;color:var(--muted);font-size:15px;line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 28px 22px}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:90px 60px}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;margin-top:50px;
+}
+.testi-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:32px;
+  transition:all 0.3s;position:relative;
+}
+.testi-card:hover{transform:translateY(-6px);border-color:rgba(0,255,160,0.3)}
+.testi-stars{color:#ffd700;font-size:14px;margin-bottom:16px;letter-spacing:2px}
+.testi-text{
+  color:var(--muted);font-size:15px;line-height:1.8;
+  margin-bottom:24px;font-style:italic;
+}
+.testi-text::before{content:'"';font-size:40px;color:var(--green);opacity:0.3;line-height:0;vertical-align:-14px;margin-right:4px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  color:#060c14;font-size:16px;
+}
+.testi-name{font-weight:600;color:var(--text);font-size:15px}
+.testi-role{color:var(--muted);font-size:12px}
+
+/* ── MESH BACKGROUND UPGRADE ── */
+#page-home .hero{
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 50%,rgba(0,255,160,0.05) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%,rgba(0,180,255,0.04) 0%,transparent 70%);
+}
+
+/* ── MOBILE ADDITIONS ── */
+@media(max-width:900px){
+  .faq-section,.testimonials{padding:60px 24px}
+  .testi-grid{grid-template-columns:1fr}
+  .float-btns{bottom:80px;right:16px}
+  #backTop{bottom:16px;right:16px}
+  .nav-ticker{display:none}
+}
+@media(max-width:600px){
+  .testi-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-inner">
+    <img src="beldex.png" alt="Beldex" class="splash-logo">
+    <div class="splash-name">BELDEX</div>
+    <div class="splash-bar"><div class="splash-fill"></div></div>
+    <div class="splash-text">Loading Privacy Ecosystem...</div>
+  </div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- NAVBAR -->
+<nav class="nav" id="mainNav">
+  <a class="nav-logo" onclick="showPage('home')">
+    <img src="beldex.png" alt="Beldex">
+    <span>Beldex Cryptocurrency</span>
+  </a>
+  <div class="nav-menu" id="navMenu">
+    <a onclick="showPage('home')" class="active" id="nav-home">Home</a>
+    <a onclick="showPage('services')" id="nav-services">Services</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+    <a onclick="showPage('roadmap')" id="nav-roadmap">Roadmap</a>
+    <a onclick="showPage('coinprice')" id="nav-coinprice">Coin Price</a>
+    <a onclick="showPage('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="nav-ticker" onclick="showPage('coinprice')" title="Live BDX Price">
+      <span class="t-dot"></span>
+      <span class="t-label">BDX</span>
+      <span class="t-price" id="navPrice">₹ --</span>
+      <span class="t-change up" id="navChange">--</span>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- HOME PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left animate">
+      <div class="hero-tag"><span class="dot"></span> Privacy Blockchain Ecosystem</div>
+      <h1>
+        <span class="line1">The Future of</span><br>
+        <span class="line2">Digital Privacy</span>
+      </h1>
+      <p>Beldex is a privacy-focused blockchain ecosystem delivering secure, anonymous digital transactions and decentralized applications for the Web3 era.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" onclick="showPage('services')">Explore Services</a>
+        <a class="btn-secondary" onclick="showPage('coinprice')">🪙 Live Price</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="bdx76.png" alt="Beldex 2026" class="hero-main-img">
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num" data-target="2018" data-suffix="">2018</div><div class="stat-label">Established</div></div>
+    <div class="stat"><div class="stat-num" data-target="25" data-suffix="M+">$25M</div><div class="stat-label">DWF Labs Investment</div></div>
+    <div class="stat"><div class="stat-num">PoS</div><div class="stat-label">Consensus Mechanism</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Global Support</div></div>
+  </div>
+
+  <!-- WHAT IS BELDEX -->
+  <div class="section-wrap">
+    <div class="info-grid">
+      <div class="info-text animate">
+        <div class="section-tag">About Beldex</div>
+        <h3>Privacy-First Blockchain for Everyone</h3>
+        <p>Beldex empowers users with financial freedom and total anonymity through advanced cryptographic technology. No third-party tracking. No compromises.</p>
+        <ul class="check-list">
+          <li>Advanced cryptographic technology</li>
+          <li>Secure user identity protection</li>
+          <li>No third-party tracking</li>
+          <li>Fully decentralized system</li>
+          <li>Masternode-secured network</li>
+        </ul>
+      </div>
+      <div class="animate">
+        <img src="privacy.jpg" alt="Beldex Privacy" class="privacy-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="dark-section">
+    <div class="section-head">
+      <div class="section-tag">How It Works</div>
+      <h2>Simple. Secure. Private.</h2>
+      <p>Three steps to complete financial privacy on the Beldex blockchain</p>
+    </div>
+    <div class="steps">
+      <div class="step animate">
+        <div class="step-num">01</div>
+        <div class="step-icon">👛</div>
+        <h3>Create Wallet</h3>
+        <p>Create a secure Beldex wallet to store and manage your private digital assets safely with full ownership.</p>
+      </div>
+      <div class="step animate">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔐</div>
+        <h3>Private Transactions</h3>
+        <p>Send and receive BDX with complete anonymity using advanced Ring Signature and stealth address technology.</p>
+      </div>
+      <div class="step animate">
+        <div class="step-num">03</div>
+        <div class="step-icon">⚡</div>
+        <h3>Fast & Secure</h3>
+        <p>Enjoy instant, secure and decentralized payments with full privacy protection and zero tracking.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY STACK -->
+  <div class="stack-section">
+    <div class="section-head">
+      <div class="section-tag">Ecosystem</div>
+      <h2>Beldex Privacy Stack</h2>
+      <p>A complete suite of privacy-focused decentralized applications</p>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-row">
+        <div class="stack-left">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7h18v10H3z" stroke="#00ff9f" stroke-width="2"/><path d="M16 12h2" stroke="#00ff9f" stroke-width="2"/></svg>
+          <span>Payments</span>
+        </div>
+        <div class="stack-right">Beldex Wallet</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-left">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#00ff9f" stroke-width="2"/><path d="M3 12h18" stroke="#00ff9f" stroke-width="2"/></svg>
+          <span>Browser</span>
+        </div>
+        <div class="stack-right">Beldex Browser</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-left">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v10H7l-3 3z" stroke="#00ff9f" stroke-width="2"/></svg>
+          <span>Chat</span>
+        </div>
+        <div class="stack-right">BChat</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-left">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 5-8 8-8 8s-8-3-8-8V7z" stroke="#00ff9f" stroke-width="2"/></svg>
+          <span>VPN</span>
+        </div>
+        <div class="stack-right">BelNet</div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-left">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#00ff9f" stroke-width="2"/><path d="M4 21c1-4 14-4 16 0" stroke="#00ff9f" stroke-width="2"/></svg>
+          <span>Identity</span>
+        </div>
+        <div class="stack-right">BNS (.bdx)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCKCHAIN -->
+  <div class="blockchain-wrap">
+    <div class="bc-cards">
+      <div class="section-tag" style="margin-bottom:20px">Blockchain Technology</div>
+      <h2 style="font-family:'Rajdhani',sans-serif;font-size:42px;font-weight:700;color:var(--text);margin-bottom:8px">Secure • Decentralized<br>Transparent</h2>
+      <p style="color:var(--muted);margin-bottom:30px">Built on cutting-edge blockchain infrastructure with privacy at its core.</p>
+      <div class="bc-card animate">
+        <h3>🔐 Secure Ledger</h3>
+        <p>All transactions are encrypted and securely stored across a distributed blockchain network with zero single points of failure.</p>
+      </div>
+      <div class="bc-card animate">
+        <h3>🌐 Decentralized Network</h3>
+        <p>No central authority. Users have full control over their assets and personal data through a global masternode network.</p>
+      </div>
+      <div class="bc-card animate">
+        <h3>👁️ Privacy Focused</h3>
+        <p>Transparent verification with complete privacy protection for every user through Ring Signatures and stealth addresses.</p>
+      </div>
+    </div>
+    <div>
+      <img src="blockchain.png" alt="Blockchain" class="bc-img">
+    </div>
+  </div>
+
+  <!-- NEXUS -->
+  <div class="nexus-section">
+    <div class="nexus-wrap">
+      <div class="nexus-text">
+        <h2>Connecting People</h2>
+        <span class="brand">NEXUS</span>
+        <p>NEXUS connects individuals and businesses through smart, secure and innovative digital solutions. Building the bridge between people and the decentralized future.</p>
+        <div style="margin-top:30px">
+          <a class="btn-primary" onclick="showPage('contact')">Get In Touch</a>
+        </div>
+      </div>
+      <img src="nexustou.jpeg" alt="Nexus" class="nexus-img">
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials">
+    <div class="section-head">
+      <div class="section-tag">Community</div>
+      <h2>What Our Users Say</h2>
+      <p>Trusted by thousands of privacy-conscious users worldwide</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal scale">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Beldex is the only blockchain that truly understands privacy. My transactions are completely anonymous and the BChat app is incredible.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RK</div>
+          <div><div class="testi-name">Rajesh Kumar</div><div class="testi-role">Crypto Investor, Mumbai</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal scale">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">The staking plans are transparent and the returns are consistent. BelNet VPN is a game changer for secure browsing. Highly recommend!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">PS</div>
+          <div><div class="testi-name">Priya Sharma</div><div class="testi-role">Web3 Developer, Bangalore</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal scale">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">After the DWF Labs investment, Beldex has grown massively. The team is transparent and the roadmap is being executed perfectly.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div><div class="testi-name">Arjun Mehta</div><div class="testi-role">Blockchain Analyst, Chennai</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="section-head">
+      <div class="section-tag">FAQ</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know about Beldex</p>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What is Beldex (BDX)?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">Beldex is a privacy-focused blockchain ecosystem offering a suite of decentralized applications including BChat, BelNet VPN and Beldex Wallet. It uses advanced cryptographic technology to ensure complete anonymity for users and their transactions.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How can I buy BDX?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">BDX is available on trusted exchanges like KoinBX and CoinDCX. You can deposit INR, buy BDX and store it in your Beldex Wallet. Visit our Exchange Partners page for direct links to each platform.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What are the staking plans?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">We offer three plans — Regular (2% monthly), Combo (3% + 400% fixed bonus) and Elite (4.75–5.5% monthly). All plans run for 5 years with guaranteed returns. Visit the Plans page for detailed tables.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is Beldex safe and secure?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">Yes. Beldex runs on a Proof-of-Stake blockchain with a masternode network, smart contract audits and a bug bounty program. In 2023, DWF Labs invested $25M, validating the ecosystem's credibility and security.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What is BelNet and BChat?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">BelNet is Beldex's decentralized VPN that routes your internet traffic anonymously. BChat is a private, end-to-end encrypted messaging app built on the Beldex blockchain — no phone number required.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I contact support?
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-a">Our team is available 24×7. You can reach us via the Contact page, email us at support@beldex.io, or use the WhatsApp and Telegram buttons on this page for instant assistance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div>
+        <p>The future of privacy-focused blockchain technology. Secure, private and decentralized digital solutions for the Web3 era.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('services')">Services</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('roadmap')">Roadmap</a>
+        <a onclick="showPage('coinprice')">Coin Price</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>Beldex Technologies India<br>beldextechnology@gmail.com<br>support@beldex.io<br><br>24×7 Customer Support</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2018–2026 Beldex. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-telegram"></i></a>
+        <a href="#"><i class="fab fa-discord"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SERVICES PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-header">
+    <div class="section-tag">What We Offer</div>
+    <h1>Our Services</h1>
+    <p>Smart, private and decentralized digital solutions for the Web3 world</p>
+  </div>
+  <div class="service-grid">
+    <a class="srv-card card-link" onclick="showPage('plans')">
+      <div class="srv-icon"><i class="fa-solid fa-layer-group service-icon"></i></div>
+      <h3>Staking Plans</h3>
+      <p>Flexible BDX staking options with competitive returns. Regular, Combo and Elite plans available for all investors.</p>
+    </a>
+    <a class="srv-card card-link" onclick="showPage('roadmap')">
+      <div class="srv-icon"><i class="fa-solid fa-road service-icon"></i></div>
+      <h3>Road Map</h3>
+      <p>Our strategic development roadmap from launch to global adoption. Transparent milestones and future vision.</p>
+    </a>
+    <a class="srv-card card-link" onclick="showPage('coinprice')">
+      <div class="srv-icon"><i class="fa-solid fa-coins service-icon"></i></div>
+      <h3>Coin Price</h3>
+      <p>Live BDX price tracking with real-time market data, charts and performance insights updated every 15 seconds.</p>
+    </a>
+    <a class="srv-card card-link" onclick="showPage('exchange')">
+      <div class="srv-icon"><i class="fa-solid fa-handshake service-icon"></i></div>
+      <h3>Exchange Partners</h3>
+      <p>Trusted exchange platforms where you can buy, sell and trade BDX with ease and security.</p>
+    </a>
+  </div>
+  <div class="dark-section" style="margin-top:0;text-align:center">
+    <div class="section-tag">Get Started</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:38px;color:var(--text);margin:16px 0 12px">Building the Future of Privacy</h2>
+    <p style="color:var(--muted);max-width:500px;margin:0 auto 28px">Explore our services and stay updated with the latest Beldex developments.</p>
+    <a class="btn-primary" onclick="showPage('contact')">Get in Touch</a>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div>
+        <p>Secure, private and decentralized digital solutions.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('roadmap')">Roadmap</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- ABOUT PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="section-tag">Who We Are</div>
+    <h1>About Beldex</h1>
+    <p>A privacy-focused blockchain ecosystem offering decentralized applications for secure and anonymous online interactions. Empowering individuals with true digital freedom.</p>
+  </div>
+  <div class="about-cards">
+    <div class="about-card animate">
+      <h2>🚀 Our Mission</h2>
+      <p>To provide a comprehensive environment where individuals can exchange data and perform transactions with true confidentiality. We focus on individual safety and privacy in the digital age, addressing shortcomings of traditional centralized platforms.</p>
+    </div>
+    <div class="about-card animate">
+      <h2>🌍 Our Vision</h2>
+      <p>To address widespread privacy leakage in Web3 by offering a full suite of privacy applications. Operating on our own decentralized blockchain with Proof-of-Stake consensus and a masternode network ensuring security, scalability and anonymity.</p>
+    </div>
+    <div class="about-card animate">
+      <h2>⭐ Why Choose Beldex</h2>
+      <p>Beldex (BDX) is chosen for its comprehensive focus on user digital privacy and anonymity across both financial transactions and everyday online activities. A complete, decentralized ecosystem that is a secure alternative to surveillance-heavy platforms.</p>
+    </div>
+  </div>
+  <div class="dark-section" style="text-align:center">
+    <div class="section-tag">Key Milestones</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:38px;color:var(--text);margin:16px 0 50px">Our Journey</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">2018</div><h3>Founded</h3><p>Beldex concept developed and launched as a privacy-focused blockchain project.</p></div>
+      <div class="step"><div class="step-num">2021</div><h3>PoS Transition</h3><p>Transitioned from PoW to Proof-of-Stake for improved scalability and energy efficiency.</p></div>
+      <div class="step"><div class="step-num">2022</div><h3>Research Labs</h3><p>Beldex Research Labs established, focusing on EVM compatibility and zk-sidechains.</p></div>
+      <div class="step"><div class="step-num">$25M</div><h3>DWF Investment</h3><p>Secured $25 million investment from DWF Labs to expand the ecosystem globally.</p></div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- ROADMAP PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-roadmap">
+  <div class="page-header">
+    <div class="section-tag">Our Journey</div>
+    <h1>Beldex Roadmap</h1>
+    <p>Our strategic path towards building a secure, private and scalable ecosystem</p>
+  </div>
+  <div class="roadmap-grid">
+    <div class="rm-card animate" onclick="showPage('launch')">
+      <div class="rm-quarter">Q1 2025</div>
+      <h3>🚀 Launch & Foundation</h3>
+      <ul>
+        <li>Initial Concept & Launch</li>
+        <li>Core Technology Setup</li>
+        <li>Transition to Proof-of-Stake</li>
+        <li>Established 2018</li>
+      </ul>
+    </div>
+    <div class="rm-card animate" onclick="showPage('devsec')">
+      <div class="rm-quarter">Q2 2025</div>
+      <h3>🔐 Development & Security</h3>
+      <ul>
+        <li>Mobile Wallet App</li>
+        <li>Advanced Staking Dashboard</li>
+        <li>Security Audit</li>
+        <li>Performance Optimization</li>
+      </ul>
+    </div>
+    <div class="rm-card animate" onclick="showPage('growth')">
+      <div class="rm-quarter">Q3 2025</div>
+      <h3>📈 Growth & Adoption</h3>
+      <ul>
+        <li>Exchange Listings</li>
+        <li>Strategic Partnerships</li>
+        <li>Referral & Rewards Program</li>
+        <li>Liquidity Expansion</li>
+      </ul>
+    </div>
+    <div class="rm-card animate" onclick="showPage('governance')">
+      <div class="rm-quarter">Q4 2025</div>
+      <h3>⚖ Security & Governance</h3>
+      <ul>
+        <li>DAO Voting System</li>
+        <li>Bug Bounty Program</li>
+        <li>Smart Contract Audit</li>
+        <li>Governance Tools</li>
+      </ul>
+    </div>
+    <div class="rm-card animate" onclick="showPage('ecosystem')">
+      <div class="rm-quarter">Q1 2026</div>
+      <h3>🌐 Ecosystem Expansion</h3>
+      <ul>
+        <li>Developer Grants</li>
+        <li>dApp Ecosystem Support</li>
+        <li>API & SDK Release</li>
+        <li>Cross-Chain Integration</li>
+      </ul>
+    </div>
+    <div class="rm-card rm-future animate" onclick="showPage('futurevision')">
+      <div class="rm-quarter" style="background:rgba(0,180,255,0.1);border-color:rgba(0,180,255,0.3);color:var(--blue)">Future</div>
+      <h3>🔮 Future Vision</h3>
+      <ul>
+        <li>Privacy Protocol Upgrade</li>
+        <li>Zero-Knowledge Improvements</li>
+        <li>Institutional Partnerships</li>
+        <li>Global Adoption</li>
+      </ul>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:13px;padding:0 0 40px">* Roadmap is subject to market conditions and community governance.</p>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- COIN PRICE PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-coinprice">
+  <div class="page-header">
+    <div class="section-tag">Live Market Data</div>
+    <h1>💰 Beldex Coin Price</h1>
+    <p>Real-time market overview & performance metrics (INR)</p>
+  </div>
+  <div class="price-wrap">
+    <div class="live-pill">
+      <span class="live-dot"></span>
+      Live · Updates every 15 sec &nbsp;|&nbsp; <span id="lastUpdated">--</span>
+    </div>
+    <div class="price-cards">
+      <div class="pc"><span>Current Price</span><h2 id="price">₹ --</h2></div>
+      <div class="pc" id="changeCard"><span>24H Change</span><h2 id="change">--</h2></div>
+      <div class="pc"><span>Market Cap</span><h2 id="marketcap">₹ --</h2></div>
+      <div class="pc"><span>24H Volume</span><h2 id="volume">₹ --</h2></div>
+    </div>
+    <div class="chart-card">
+      <h2>📊 Beldex Live Chart</h2>
+      <div class="tradingview-widget-container"><div id="tradingview_bdx"></div></div>
+    </div>
+    <div class="insight-card">
+      <h2>📈 Price Insights</h2>
+      <ul>
+        <li>High liquidity with stable growth trend</li>
+        <li>Listed on major global crypto exchanges</li>
+        <li>Strong long-term holding potential</li>
+        <li>Privacy-focused blockchain advantage</li>
+      </ul>
+      <div style="margin-top:24px"><a class="btn-secondary" onclick="showPage('services')">⬅ Back to Services</a></div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- EXCHANGE PARTNERS -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-exchange">
+  <div class="page-header">
+    <div class="section-tag">Trusted Platforms</div>
+    <h1>🤝 Exchange Partners</h1>
+    <p>Trusted exchanges where you can trade BDX with ease, security and fast processing</p>
+  </div>
+  <div class="ex-grid">
+    <div class="ex-card animate">
+      <img src="Koinbx.png.jpeg" alt="KoinBX" class="ex-logo">
+      <div class="ex-info">
+        <h2>KoinBX</h2>
+        <p>KoinBX is a fast-growing Indian crypto exchange platform offering secure trading, instant deposits and smooth INR support. BDX is actively traded on KoinBX with strong liquidity.</p>
+        <a href="https://www.koinbx.com" target="_blank" class="btn-primary">Visit KoinBX ↗</a>
+      </div>
+    </div>
+    <div class="ex-card animate">
+      <div class="ex-logo" style="display:flex;align-items:center;justify-content:center;width:200px;height:80px;background:rgba(255,255,255,0.06);border-radius:12px;font-family:Rajdhani,sans-serif;font-size:28px;font-weight:700;color:#00b4ff;flex-shrink:0">CoinDCX</div>
+      <div class="ex-info">
+        <h2>CoinDCX</h2>
+        <p>CoinDCX is one of India's largest crypto exchanges providing advanced trading tools, margin support and a trusted environment for buying and selling BDX with deep liquidity.</p>
+        <a href="https://coindcx.com" target="_blank" class="btn-primary">Visit CoinDCX ↗</a>
+      </div>
+    </div>
+    <div class="ex-card animate">
+      <div class="ex-logo" style="display:flex;align-items:center;justify-content:center;width:200px;height:80px;background:rgba(255,255,255,0.06);border-radius:12px;font-family:Rajdhani,sans-serif;font-size:24px;font-weight:700;color:#8aff80;flex-shrink:0">CoinGecko</div>
+      <div class="ex-info">
+        <h2>CoinGecko</h2>
+        <p>CoinGecko is a global cryptocurrency data platform tracking BDX price, market cap, trading volume and providing real-time analytics and market intelligence.</p>
+        <a href="https://www.coingecko.com" target="_blank" class="btn-primary">View on CoinGecko ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="trust-box">
+    <div class="section-tag">Why Trust Us</div>
+    <h2 style="margin:16px 0 16px">⚡ Fast Withdrawals & Instant Processing</h2>
+    <p>Our exchange partners ensure lightning-fast withdrawals, smooth INR deposits and secure transaction processing. Your funds remain protected with top-grade security systems.</p>
+    <div class="trust-points">
+      <div class="tp">✔ Instant INR Deposits</div>
+      <div class="tp">✔ Fast Withdrawal Processing</div>
+      <div class="tp">✔ Secure Wallet Infrastructure</div>
+      <div class="tp">✔ 24/7 Customer Support</div>
+    </div>
+    <div style="margin-top:30px"><a class="btn-primary" onclick="showPage('contact')">Contact Us</a></div>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PLANS PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-plans">
+  <div class="page-header">
+    <div class="section-tag">Staking</div>
+    <h1>Beldex Staking Plans</h1>
+    <p>Choose the best long-term staking plan and grow your BDX holdings</p>
+  </div>
+  <div class="plans-wrap">
+
+    <!-- COMBO PLAN -->
+    <div class="plan-block">
+      <div class="plan-title">🔁 NEXUS BVS PLAN – 5 Years Combo Staking (BDX)</div>
+      <div class="plan-table-wrap">
+        <table>
+          <thead><tr><th>Staking Volume</th><th>Combo Plan</th><th>Monthly ROI%</th><th>Monthly Returns</th><th>ROI in 60M</th><th>After 5 Years Total</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="2">5,000</td><td>2500 BDX – REGULAR</td><td>3%</td><td>75</td><td>4,500</td><td rowspan="2" class="td-total">17,000 BDX</td></tr>
+            <tr><td>2500 BDX – FIXED</td><td>0%</td><td>0</td><td>2500×400%=10,000</td></tr>
+            <tr><td rowspan="2">10,000</td><td>5000 BDX – REGULAR</td><td>3%</td><td>150</td><td>9,000</td><td rowspan="2" class="td-total">34,000 BDX</td></tr>
+            <tr><td>5000 BDX – FIXED</td><td>0%</td><td>0</td><td>5000×400%=20,000</td></tr>
+            <tr><td rowspan="2">25,000</td><td>12500 BDX – REGULAR</td><td>3%</td><td>375</td><td>22,500</td><td rowspan="2" class="td-total">85,000 BDX</td></tr>
+            <tr><td>12500 BDX – FIXED</td><td>0%</td><td>0</td><td>12500×400%=50,000</td></tr>
+            <tr><td rowspan="2">50,000</td><td>25000 BDX – REGULAR</td><td>3%</td><td>750</td><td>45,000</td><td rowspan="2" class="td-total">170,000 BDX</td></tr>
+            <tr><td>25000 BDX – FIXED</td><td>0%</td><td>0</td><td>25000×400%=100,000</td></tr>
+            <tr><td rowspan="2">1,00,000</td><td>50000 BDX – REGULAR</td><td>3%</td><td>1,500</td><td>90,000</td><td rowspan="2" class="td-total">3,40,000 BDX</td></tr>
+            <tr><td>50000 BDX – FIXED</td><td>0%</td><td>0</td><td>50000×400%=200,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- REGULAR PLAN -->
+    <div class="plan-block">
+      <div class="plan-title">📈 5 Years Regular Plan</div>
+      <div class="plan-table-wrap">
+        <table>
+          <thead><tr><th>Staking (BDX)</th><th>Monthly ROI%</th><th>Monthly Rewards</th><th>60 Month Rewards</th><th>Total Maturity</th></tr></thead>
+          <tbody>
+            <tr><td>10,000</td><td>2%</td><td>200</td><td>12,000</td><td class="td-total">22,000 BDX</td></tr>
+            <tr><td>15,000</td><td>2%</td><td>300</td><td>18,000</td><td class="td-total">33,000 BDX</td></tr>
+            <tr><td>20,000</td><td>2%</td><td>400</td><td>24,000</td><td class="td-total">44,000 BDX</td></tr>
+            <tr><td>25,000</td><td>2%</td><td>500</td><td>30,000</td><td class="td-total">55,000 BDX</td></tr>
+            <tr><td>50,000</td><td>2%</td><td>1,000</td><td>60,000</td><td class="td-total">1,10,000 BDX</td></tr>
+            <tr><td>1,00,000</td><td>2.2%</td><td>2,200</td><td>1,32,000</td><td class="td-total">2,32,000 BDX</td></tr>
+            <tr><td>2,00,000</td><td>2.3%</td><td>4,600</td><td>2,76,000</td><td class="td-total">4,76,000 BDX</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ELITE PLAN -->
+    <div class="plan-block">
+      <div class="plan-title" style="background:linear-gradient(90deg,rgba(255,180,0,0.15),transparent);padding:12px 0;border-radius:8px">⭐ Elite Staking Plan – 5 Years <span class="elite-badge">ELITE</span></div>
+      <div class="plan-table-wrap">
+        <table>
+          <thead><tr><th>Staking Volume</th><th>Monthly ROI%</th><th>Monthly Output</th><th>Total 5Y Output</th><th>Total Returns</th></tr></thead>
+          <tbody>
+            <tr><td>50,000 BDX</td><td>4.75%</td><td>2,375 BDX</td><td>1,42,500 BDX</td><td class="td-total">285%</td></tr>
+            <tr><td>1,00,000 BDX</td><td>5%</td><td>5,000 BDX</td><td>3,00,000 BDX</td><td class="td-total">300%</td></tr>
+            <tr><td>2,00,000 BDX</td><td>5.25%</td><td>10,500 BDX</td><td>6,30,000 BDX</td><td class="td-total">315%</td></tr>
+            <tr><td>5,00,000 BDX</td><td>5.5%</td><td>27,500 BDX</td><td>16,50,000 BDX</td><td class="td-total">330%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:20px"><a class="btn-secondary" onclick="showPage('contact')">📞 Enquire About Plans</a></div>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('contact')">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- CONTACT PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-header">
+    <div class="section-tag">Get In Touch</div>
+    <h1>Contact Us</h1>
+    <p>Our crypto experts are available 24×7 to help you with transactions, wallets and security queries.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2>Need Assistance?</h2>
+      <p>Whether you have questions about our services, staking plans or blockchain technology — our team is here to help you every step of the way.</p>
+      <div class="contact-info-cards">
+        <div class="ci-card">
+          <div class="ci-icon"><i class="fas fa-headset"></i></div>
+          <div class="ci-text"><span>Support</span><strong>24×7 Helpline Available</strong></div>
+        </div>
+        <div class="ci-card">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div class="ci-text"><span>Email</span><strong>support@beldex.io</strong></div>
+        </div>
+        <div class="ci-card">
+          <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="ci-text"><span>Location</span><strong>Beldex Technologies India</strong></div>
+        </div>
+        <div class="ci-card">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div class="ci-text"><span>Business</span><strong>beldextechnology@gmail.com</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h2>Send a Message</h2>
+      <p class="sub">🟢 24/7 Customer Support — We respond within hours</p>
+      <form action="https://formspree.io/f/xwvnorjr" method="POST">
+        <div class="form-group"><input type="text" name="name" placeholder="Your Name" required></div>
+        <div class="form-group"><input type="email" name="email" placeholder="Your Email" required></div>
+        <div class="form-group"><input type="text" name="subject" placeholder="Subject"></div>
+        <div class="form-group"><textarea name="message" placeholder="Your Message..."></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer;font-size:16px;font-family:'Inter',sans-serif">Send Message →</button>
+      </form>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-row"><img src="beldex.png"><span class="name">Beldex</span></div><p>Secure, private and decentralized digital solutions.</p></div>
+      <div class="footer-col"><h4>Navigation</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('services')">Services</a><a onclick="showPage('about')">About</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>Beldex Technologies India<br>beldextechnology@gmail.com<br>support@beldex.io</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2018–2026 Beldex. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- DETAIL PAGES (roadmap sub-pages) -->
+<!-- ═══════════════════════════════════════ -->
+<!-- Launch & Foundation -->
+<div class="page" id="page-launch">
+  <div class="page-header"><div class="section-tag">Q1 2025</div><h1>🚀 Launch & Foundation</h1><p>The beginning phase of Beldex focusing on core vision, technology and network launch.</p></div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>📌 Key Highlights</h2>
+      <ul>
+        <li>The concept for Beldex was developed in 2018 and launched in the same year.</li>
+        <li>In December 2021, Beldex transitioned from PoW to Proof-of-Stake (PoS) to improve scalability.</li>
+        <li>Beldex provides secure & confidential data exchange via dApps like BChat, BelNet (VPN) and Beldex Wallet.</li>
+        <li>Beldex Research Labs established in January 2022 focusing on EVM compatibility and zk-sidechains.</li>
+        <li>In 2023, Beldex secured a $25M investment from DWF Labs to expand the ecosystem.</li>
+      </ul>
+      <h2>🔐 Focus Areas</h2>
+      <ul>
+        <li>Privacy-centric blockchain architecture</li>
+        <li>Secure Proof-of-Stake consensus mechanism</li>
+        <li>Community-driven foundation and governance</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- Dev & Security -->
+<div class="page" id="page-devsec">
+  <div class="page-header"><div class="section-tag">Q2 2025</div><h1>🛠 Development & Security</h1><p>Strengthening the Beldex ecosystem through robust development, audits and performance improvements.</p></div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>🔐 Key Highlights</h2>
+      <ul>
+        <li>Mobile Wallet App development with improved UX and performance</li>
+        <li>Advanced Staking Dashboard for real-time rewards tracking</li>
+        <li>Comprehensive Security Audits across network components</li>
+        <li>Performance optimization for faster transactions and scalability</li>
+      </ul>
+      <h2>🧩 Focus Areas</h2>
+      <ul>
+        <li>Secure smart-contract architecture</li>
+        <li>Network stability and uptime assurance</li>
+        <li>Advanced encryption & privacy layers</li>
+        <li>Community-reviewed security improvements</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- Growth & Adoption -->
+<div class="page" id="page-growth">
+  <div class="page-header"><div class="section-tag">Q3 2025</div><h1>📈 Growth & Adoption</h1><p>Expanding the Beldex ecosystem through partnerships, adoption strategies and global reach.</p></div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>🚀 Key Highlights</h2>
+      <ul>
+        <li>Exchange listings to improve global accessibility</li>
+        <li>Strategic partnerships with Web3 & privacy-focused platforms</li>
+        <li>Referral & rewards programs to boost community growth</li>
+        <li>Liquidity expansion for stable trading and adoption</li>
+      </ul>
+      <h2>🌍 Focus Areas</h2>
+      <ul>
+        <li>User adoption & onboarding initiatives</li>
+        <li>Global marketing & brand awareness campaigns</li>
+        <li>Developer & ecosystem partnerships</li>
+        <li>Incentives for long-term holders and users</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- Security & Governance -->
+<div class="page" id="page-governance">
+  <div class="page-header"><div class="section-tag">Q4 2025</div><h1>⚖ Security & Governance</h1><p>Strengthening the Beldex network with advanced security mechanisms and decentralized governance.</p></div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>🔐 Key Highlights</h2>
+      <ul>
+        <li>DAO-based voting system for decentralized decision making</li>
+        <li>Smart contract audits to ensure network integrity</li>
+        <li>Bug bounty programs to identify and fix vulnerabilities</li>
+        <li>Advanced cryptographic security layers</li>
+      </ul>
+      <h2>⚖ Governance Focus</h2>
+      <ul>
+        <li>Community-driven proposals & voting mechanism</li>
+        <li>Transparent on-chain governance framework</li>
+        <li>On-chain decision execution and tracking</li>
+        <li>Long-term sustainability planning and treasury management</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- Ecosystem Expansion -->
+<div class="page" id="page-ecosystem">
+  <div class="page-header"><div class="section-tag">Q1 2026</div><h1>🌍 Ecosystem Expansion</h1><p>Expanding the Beldex ecosystem through developer support, integrations and community growth.</p></div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>🚀 Key Initiatives</h2>
+      <ul>
+        <li>Developer grants to encourage dApp creation and innovation</li>
+        <li>Expansion of Beldex dApp ecosystem across sectors</li>
+        <li>Cross-chain interoperability support for multi-network access</li>
+        <li>Strategic ecosystem partnerships with leading Web3 projects</li>
+      </ul>
+      <h2>🧩 Platform Growth</h2>
+      <ul>
+        <li>API & SDK releases for third-party developers</li>
+        <li>Enhanced tools for privacy-focused applications</li>
+        <li>Support for multi-chain integrations</li>
+        <li>Improved scalability & performance infrastructure</li>
+      </ul>
+      <h2>🤝 Community & Adoption</h2>
+      <ul>
+        <li>Developer onboarding programs and documentation</li>
+        <li>Hackathons & innovation challenges with prizes</li>
+        <li>Global community expansion and ambassador programs</li>
+        <li>Educational & awareness initiatives worldwide</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- Future Vision -->
+<div class="page" id="page-futurevision">
+  <div class="page-header" style="background:linear-gradient(135deg,var(--bg2),rgba(0,100,200,0.08))">
+    <div class="section-tag" style="color:var(--blue);border-color:rgba(0,180,255,0.2);background:rgba(0,180,255,0.08)">Future</div>
+    <h1>🔮 Future Vision</h1>
+    <p>Shaping the future of privacy-focused blockchain technology with innovation, decentralization and global impact.</p>
+  </div>
+  <div class="detail-page">
+    <div class="detail-card">
+      <h2>🌐 Long-Term Goals</h2>
+      <ul>
+        <li>Position Beldex as a global leader in privacy-centric blockchain solutions</li>
+        <li>Enable seamless, private digital interactions across all platforms</li>
+        <li>Build a fully decentralized and community-governed ecosystem</li>
+        <li>Support real-world use cases for secure communication and data exchange</li>
+      </ul>
+      <h2>🚀 Technology Vision</h2>
+      <ul>
+        <li>Advanced zero-knowledge privacy technologies and ZK proofs</li>
+        <li>Scalable blockchain infrastructure for mass adoption</li>
+        <li>Cross-chain and multi-network compatibility</li>
+        <li>Continuous performance and security enhancements</li>
+      </ul>
+      <h2>🤝 Community & Ecosystem</h2>
+      <ul>
+        <li>Empower developers and users through open innovation programs</li>
+        <li>Global community growth and education initiatives</li>
+        <li>Long-term sustainability through decentralized governance</li>
+        <li>Strategic partnerships driving widespread global adoption</li>
+      </ul>
+    </div>
+    <div style="margin-top:30px"><a class="btn-secondary" onclick="showPage('roadmap')">⬅ Back to Roadmap</a></div>
+  </div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none"><p>© 2018–2026 Beldex. All rights reserved.</p></div></footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SCRIPTS -->
+<!-- ═══════════════════════════════════════ -->
+<script>
+// ── SPLASH SCREEN ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('splash').classList.add('hide');
+    initCounters();
+  },2000);
+});
+
+// ── CUSTOM CURSOR ──
+const cur=document.getElementById('cursor');
+const trail=document.getElementById('cursor-trail');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
+  setTimeout(()=>{
+    trail.style.left=e.clientX+'px';
+    trail.style.top=e.clientY+'px';
+  },80);
+});
+document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(0.6)');
+document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+
+// ── PARTICLES ──
+(function(){
+  const container=document.getElementById('particles');
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*4+2;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${Math.random()*20+15}s;animation-delay:${Math.random()*15}s;`;
+    container.appendChild(p);
+  }
+})();
+
+// ── PAGE ROUTING ──
+const pages={
+  home:'page-home',services:'page-services',about:'page-about',
+  roadmap:'page-roadmap',coinprice:'page-coinprice',exchange:'page-exchange',
+  plans:'page-plans',contact:'page-contact',
+  launch:'page-launch',devsec:'page-devsec',growth:'page-growth',
+  governance:'page-governance',ecosystem:'page-ecosystem',futurevision:'page-futurevision'
+};
+const navIds=['home','services','about','roadmap','coinprice','contact'];
+let tvLoaded=false;
+
+function showPage(key){
+  Object.values(pages).forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.remove('active');
+  });
+  const target=document.getElementById(pages[key]);
+  if(target){
+    target.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    // trigger reveal for new page
+    setTimeout(()=>observeReveals(target),100);
+  }
+  navIds.forEach(id=>{
+    const a=document.getElementById('nav-'+id);
+    if(a) a.classList.remove('active');
+  });
+  if(navIds.includes(key)){
+    const a=document.getElementById('nav-'+key);
+    if(a) a.classList.add('active');
+  }
+  document.getElementById('navMenu').classList.remove('open');
+  if(key==='coinprice'&&!tvLoaded){
+    loadTradingView();tvLoaded=true;loadPrice();
+  }
+  setTimeout(()=>{
+    if(target) target.querySelectorAll('.animate').forEach(el=>el.classList.add('in'));
+  },100);
+}
+
+// ── NAV SCROLL + BACK TO TOP ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20);
+  document.getElementById('backTop').classList.toggle('show',window.scrollY>400);
+  // scroll reveal on scroll
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight-80) el.classList.add('visible');
+  });
+});
+
+// ── SCROLL REVEAL ──
+function observeReveals(container){
+  const els=(container||document).querySelectorAll('.reveal');
+  els.forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight-80) el.classList.add('visible');
+  });
+}
+setTimeout(()=>observeReveals(document.getElementById('page-home')),300);
+
+// ── HAMBURGER ──
+function toggleMenu(){
+  document.getElementById('navMenu').classList.toggle('open');
+}
+
+// ── TYPEWRITER ──
+function typewriter(el,text,speed=60){
+  el.textContent='';let i=0;
+  const t=setInterval(()=>{
+    el.textContent+=text[i++];
+    if(i>=text.length) clearInterval(t);
+  },speed);
+}
+setTimeout(()=>{
+  const el=document.querySelector('.hero h1 .line2');
+  if(el) typewriter(el,'Digital Privacy',80);
+},2200);
+
+// ── ANIMATED COUNTERS ──
+function initCounters(){
+  document.querySelectorAll('.stat-num').forEach(el=>{
+    const target=el.dataset.target;
+    if(!target) return;
+    const isNum=!isNaN(target);
+    if(!isNum) return;
+    let start=0;const end=parseInt(target);
+    const dur=1800;const step=dur/60;
+    const inc=end/60;
+    const timer=setInterval(()=>{
+      start+=inc;
+      if(start>=end){start=end;clearInterval(timer);}
+      el.textContent=Math.floor(start).toLocaleString()+(el.dataset.suffix||'');
+    },step);
+  });
+}
+
+// ── 3D TILT ──
+document.querySelectorAll('.tilt').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    card.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*12}deg) scale(1.03)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='perspective(600px) rotateY(0) rotateX(0) scale(1)';
+  });
+});
+
+// ── FAQ ──
+function toggleFaq(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── COIN PRICE ──
+function loadPrice(){
+  fetch("https://api.coingecko.com/api/v3/simple/price?ids=beldex&vs_currencies=inr&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
+  .then(r=>r.json())
+  .then(data=>{
+    const bdx=data.beldex;
+    const price='₹ '+bdx.inr.toFixed(4);
+    const ch=bdx.inr_24h_change.toFixed(2);
+    const chStr=(ch>0?'+':'')+ch+'%';
+    // coin price page
+    const priceEl=document.getElementById('price');
+    if(priceEl) priceEl.innerText=price;
+    const changeEl=document.getElementById('change');
+    if(changeEl) changeEl.innerText=chStr;
+    const card=document.getElementById('changeCard');
+    if(card){card.classList.remove('green','red');card.classList.add(ch>=0?'green':'red');}
+    const mc=document.getElementById('marketcap');
+    if(mc) mc.innerText='₹ '+(bdx.inr_market_cap/1e7).toFixed(2)+' Cr';
+    const vol=document.getElementById('volume');
+    if(vol) vol.innerText='₹ '+(bdx.inr_24h_vol/1e7).toFixed(2)+' Cr';
+    const lu=document.getElementById('lastUpdated');
+    if(lu) lu.innerText='Updated: '+new Date().toLocaleTimeString();
+    // NAV ticker
+    const np=document.getElementById('navPrice');
+    if(np) np.innerText=price;
+    const nc=document.getElementById('navChange');
+    if(nc){nc.innerText=chStr;nc.className='t-change '+(ch>=0?'up':'dn');}
+  }).catch(()=>{});
+}
+loadPrice();
+setInterval(()=>loadPrice(),15000);
+
+// ── TRADINGVIEW ──
+function loadTradingView(){
+  const s=document.createElement('script');
+  s.src='https://s3.tradingview.com/tv.js';
+  s.onload=()=>{
+    new TradingView.widget({
+      container_id:'tradingview_bdx',
+      symbol:'KUCOIN:BDXUSDT',
+      interval:'30',timezone:'Asia/Kolkata',
+      theme:'dark',style:'1',locale:'en',
+      toolbar_bg:'#0a1520',hide_top_toolbar:false,
+      hide_legend:false,allow_symbol_change:false,
+      save_image:false,width:'100%',height:'100%'
+    });
+  };
+  document.head.appendChild(s);
+}
+
+// ── INIT ANIMATIONS ──
+setTimeout(()=>{
+  document.querySelectorAll('#page-home .animate').forEach(el=>el.classList.add('in'));
+},2300);
+</script>
+<!-- FLOATING CONTACT BUTTONS -->
+<div class="float-btns">
+  <a href="https://wa.me/919999999999" target="_blank" class="float-btn whatsapp" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="https://t.me/beldex" target="_blank" class="float-btn telegram" title="Telegram">
+    <i class="fab fa-telegram"></i>
+  </a>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+</body>
+</html>
